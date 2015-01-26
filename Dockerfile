@@ -1,0 +1,9 @@
+FROM node:0.10.35
+
+ENV PROJECT_ROOT /opt/app
+
+RUN mkdir -p $PROJECT_ROOT
+ADD . $PROJECT_ROOT
+WORKDIR $PROJECT_ROOT
+
+CMD ["/bin/bash"]
