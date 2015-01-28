@@ -1,20 +1,27 @@
-var Hapi = require('hapi');
+var Hapi    = require('hapi')
+  , Hoek    = require('hoek')
+  , config  = require('./config/' + process.env.NODE_ENV || 'dev');
 
-// Create a server with a host and port
+// Create a server
 var server = new Hapi.Server();
+
+// Create connection
 server.connection({
-    host: '0.0.0.0',
-    port: 8000
+    host: config.server.host,
+    port: config.server.port
 });
 
-// Add the route
-server.route({
-    method: 'GET',
-    path:'/hello',
-    handler: function (request, reply) {
-       reply('hello world');
-    }
-});
+// Load application modules
+require('./lib/modules')(server);
 
-// Start the server
-server.start();
+// Load plugins
+server.register(
+  require('./lib/plugins'),
+  function (err) {
+    if (err) console.error(err);
+    // Start server
+    server.start(function () {
+        console.info('Server started at ' + server.info.uri);
+    });
+  }
+);

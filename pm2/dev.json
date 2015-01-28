@@ -1,0 +1,10 @@
+{
+  "apps" : [{
+    "name"        : "vt-api",
+    "script"      : "index.js",
+    "log_date_format"  : "YYYY-MM-DD HH:mm Z",
+    "ignoreWatch" : ["node_modules"],
+    "watch"       : true,
+    "cwd"         : "/opt/app"
+  }]
+}
