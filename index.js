@@ -3,12 +3,14 @@ var Hapi    = require('hapi')
   , config  = require('./config/' + process.env.NODE_ENV || 'dev');
 
 // Create a server
-var server = new Hapi.Server();
+var server = new Hapi.Server({
+  app: config // Store static config
+});
 
 // Create connection
 server.connection({
-    host: config.server.host,
-    port: config.server.port
+    host: server.settings.app.server.host,
+    port: server.settings.app.server.port
 });
 
 // Load application modules
@@ -16,7 +18,7 @@ require('./lib/modules')(server);
 
 // Load plugins
 server.register(
-  require('./lib/plugins'),
+  require('./lib/plugins')(server),
   function (err) {
     if (err) console.error(err);
     // Start server
