@@ -1,19 +1,23 @@
 {
-  "name": "vt.api",
+  "name": "vt-api",
   "version": "1.0.0",
   "description": "The backend API for the Viite/Vyte platform",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zehnergroup/vt.api.git"
+    "url": "https://github.com/zehnergroup/vt-api.git"
   },
   "author": "ZGLabs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zehnergroup/vt.api/issues"
+    "url": "https://github.com/zehnergroup/vt-api/issues"
   },
-  "homepage": "https://github.com/zehnergroup/vt.api"
+  "homepage": "https://github.com/zehnergroup/vt-api",
+  "dependencies": {
+    "express": "^4.11.1",
+    "hapi": "^8.1.0"
+  }
 }
