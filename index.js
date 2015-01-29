@@ -21,9 +21,13 @@ server.register(
   require('./lib/plugins')(server),
   function (err) {
     if (err) console.error(err);
-    // Start server
-    server.start(function () {
-        console.info('Server started at ' + server.info.uri);
-    });
+    // Start server (if not being included by test Lab)
+    if (!module.parent) {
+      server.start(function () {
+          console.info('Server started at ' + server.info.uri);
+      });
+    }
   }
 );
+
+module.exports = server;
