@@ -6,7 +6,7 @@
 cp -a /tmp/app/node_modules $PROJECT_ROOT
 
 # start app (with debugging)
-nodemon -V --web-host 0.0.0.0 --exec node-debug index.js
+# nodemon -V --web-host 0.0.0.0 --exec node-debug index.js
 
 # start app (no debugging)
-# nodemon -V index.js
+nodemon -V index.js
