@@ -1,6 +1,6 @@
 var Hapi    = require('hapi')
   , Hoek    = require('hoek')
-  , config  = require('./config/' + process.env.NODE_ENV || 'dev');
+  , config  = require('./lib/config/' + process.env.NODE_ENV || 'dev');
 
 // Create a server
 var server = new Hapi.Server({
