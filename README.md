@@ -1,5 +1,15 @@
 # Viite/Vyte API
 
+### Libraries in use
+
+* Framework: <a href="http://hapijs.com/" target="_blank">Hapi</a>
+* Testing: <a href="https://github.com/hapijs/lab" target="_blank">Lab</a>
+* Assertions: <a href="https://github.com/hapijs/code" target="_blank">Code</a>
+* Hapi Utility: <a href="https://github.com/hapijs/hoek" target="_blank">Hoek</a>
+* General Utility: <a href="https://lodash.com/docs" target="_blank">lodash</a>
+* Logging: <a href="https://github.com/hapijs/good" target="_blank">Good</a>
+* Database ODM: <a href="http://mongoosejs.com/" target="_blank">Mongoose</a>
+
 ## Development Environment
 
 ### Requirements
@@ -99,3 +109,5 @@ To run tests, run the following command from inside the container:
 ```
 npm test
 ```
+
+
