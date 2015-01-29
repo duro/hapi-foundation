@@ -5,12 +5,20 @@ ENV HOME /root
 ENV TERM dumb
 ENV PROJECT_ROOT /opt/app
 
+# install some apt packages (man)
+RUN apt-get update \
+  && apt-get install -y man \
+  && rm -rf /var/lib/apt/lists/*
+
+# install some global node modules
+RUN npm install -g \
+  nodemon@1.3.2 \
+  node-inspector@0.8.3 \
+  lab@5.2.1
+
 # use changes to dependency files to force Docker not to use the cache
 # when we change our application's dependencies:
 RUN mkdir -p /tmp/app
-
-# install some global node modules
-RUN npm install -g nodemon@1.3.2 node-inspector@0.8.3
 
 # add our dependency files to a /tmp location
 ADD package.json /tmp/app/package.json
