@@ -24,7 +24,7 @@ server.register(
     // Start server (if not being included by test Lab)
     if (!module.parent) {
       server.start(function () {
-          console.info('Server started at ' + server.info.uri);
+          server.log(['server', 'info'], 'Server started at ' + server.info.uri);
       });
     }
   }
