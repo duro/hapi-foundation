@@ -1,4 +1,4 @@
-FROM duro/node-nginx:0.10.36-1.7.9
+FROM node:0.10.36
 
 ## set some ENV vars
 ENV HOME /root
@@ -23,9 +23,6 @@ RUN mkdir -p /var/log/vt-api
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/vt-api/vt-api.log
-
-## add our nginx config
-COPY nginx/ /etc/nginx/
 
 # add our app files
 RUN mkdir -p $PROJECT_ROOT
