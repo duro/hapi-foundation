@@ -40,4 +40,4 @@ WORKDIR $PROJECT_ROOT
 ## move our node_modules back into app
 RUN cp -a /tmp/app/node_modules $PROJECT_ROOT
 
-CMD ["/bin/bash"]
+CMD ["node", "index.js"]
