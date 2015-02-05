@@ -40,4 +40,7 @@ WORKDIR $PROJECT_ROOT
 ## move our node_modules back into app
 RUN cp -a /tmp/app/node_modules $PROJECT_ROOT
 
+## expose app port
+EXPOSE 8000
+
 CMD ["node", "index.js"]
