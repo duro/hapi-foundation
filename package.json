@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/zehnergroup/vt-api",
   "dependencies": {
+    "glob": "^4.3.5",
     "good": "^5.1.1",
     "good-console": "^4.1.0",
     "good-file": "^4.0.2",
     "good-http": "^4.0.0",
     "hapi": "^8.1.0",
+    "hapi-swagger": "^0.6.2",
     "hoek": "^2.11.0",
     "joi": "^5.1.0",
     "lodash": "^3.0.0",
