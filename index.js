@@ -1,11 +1,14 @@
 var Hapi    = require('hapi')
   , Hoek    = require('hoek')
-  , config  = require('./lib/config/' + process.env.NODE_ENV || 'dev');
+  , env     = process.env.NODE_ENV || 'dev'
+  , config  = require('./lib/config/' + env);
 
 // Create a server
 var server = new Hapi.Server({
   app: config // Store static config
 });
+
+console.log('App Environment: ' + env);
 
 // Create connection
 server.connection({
