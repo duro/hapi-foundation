@@ -1,30 +1,27 @@
-var Lab     = require("lab")
-  , Code    = require('code') // Assertion library
-  , Hapi    = require('hapi')
-  , lab     = exports.lab = Lab.script()
-  , env     = process.env.NODE_ENV || 'dev'
-  , config  = require('../../lib/config/' + env)
-  , expect  = Code.expect;
+var Lab         = require("lab")
+  , Code        = require('code') // Assertion library
+  , lab         = exports.lab = Lab.script()
+  , MockServer  = require('../mocks/server')
+  , expect      = Code.expect;
 
 lab.experiment("Mongoose Plugin", function() {
 
-  var server = new Hapi.Server({
-    app: config // Store static config
+  var server = new MockServer();
+
+  lab.before(function(done) {
+    var deps = require('../../lib/plugins/mongoose')(server);
+    server.register(deps, done);
   });
 
-  lab.test("should work", function(done) {
+  lab.test("plugin should be loaded", function(done) {
 
-    server.register(
-      require('../../lib/plugins/mongoose')(server),
-      function(err) {
-        expect(err).to.be.undefined();
-        done();
-      }
-    );
+    expect(server.plugins.mongoose).to.exist();
+    done();
 
   });
 
   lab.test("models loaded", function(done) {
+
     expect(server.plugins.mongoose.modelsLoaded()).to.be.true();
     done();
 

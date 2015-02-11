@@ -1,17 +1,16 @@
-var Lab     = require("lab")
-  , Code    = require('code') // Assertion library
-  , lab     = exports.lab = Lab.script()
-  , boot  = require("../../")
-  , expect  = Code.expect
-  , server;
+var Lab         = require('lab')
+  , Code        = require('code')
+  , lab         = exports.lab = Lab.script()
+  , MockServer  = require('../mocks/server')
+  , expect      = Code.expect;
 
 lab.experiment("Hello", function() {
 
+  var server = new MockServer();
+
   lab.before(function(done) {
-    boot.done(function(s) {
-      server = s;
-      done();
-    })
+    var deps = require('../../lib/plugins')(server);
+    server.register(deps, done);
   });
 
   lab.test("returns 'hello world'", function(done) {
