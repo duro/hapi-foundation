@@ -1,7 +1,7 @@
 {
   "name": "vt-api",
   "version": "1.0.0",
-  "description": "The backend API for the Viite/Vyte platform",
+  "description": "The backend API platform",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -14,9 +14,9 @@
   "author": "ZGLabs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zehnergroup/vt-api/issues"
+    "url": "https://github.com/vt-api/issues"
   },
-  "homepage": "https://github.com/zehnergroup/vt-api",
+  "homepage": "https://github.com/vt-api",
   "dependencies": {
     "bcrypt": "^0.8.1",
     "bluebird": "^2.9.8",
