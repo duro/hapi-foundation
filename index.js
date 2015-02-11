@@ -17,9 +17,6 @@ server.connection({
     port: server.settings.app.server.port
 });
 
-// Load application modules
-require('./lib/modules')(server);
-
 // Load plugins
 function boot() {
   return new P(function(resolve, reject) {
