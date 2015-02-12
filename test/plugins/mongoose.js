@@ -13,9 +13,18 @@ lab.experiment("Mongoose Plugin", function() {
     server.register(deps, done);
   });
 
-  lab.test("plugin should be loaded", function(done) {
+  lab.test("should be loaded", function(done) {
+    var m = server.plugins.mongoose
+    expect(m).to.exist();
+    expect(m.mongoose).to.exist();
+    done();
 
-    expect(server.plugins.mongoose).to.exist();
+  });
+
+  lab.test("should have created a connection", function(done) {
+    var m = server.plugins.mongoose
+    expect(m.mongoose.connections.length).to.be.at.least(1);
+    expect(m.mongoose.connection.readyState).to.equal(1);
     done();
 
   });

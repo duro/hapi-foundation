@@ -20,7 +20,7 @@ lab.experiment("Auth", function() {
     server.register(deps, done);
   });
 
-  lab.test("create a new user", function(done) {
+  lab.test("should create a new user", function(done) {
     var options = {
       method: "POST",
       url: "/register",
@@ -39,7 +39,7 @@ lab.experiment("Auth", function() {
     });
   });
 
-  lab.test("sending a user with same email address should fail", function(done) {
+  lab.test("should fail creating a user with same email as existing user", function(done) {
     var options = {
       method: "POST",
       url: "/register",

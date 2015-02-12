@@ -13,7 +13,7 @@ lab.experiment("Hello", function() {
     server.register(deps, done);
   });
 
-  lab.test("returns 'hello world'", function(done) {
+  lab.test("should return 'hello world'", function(done) {
     var options = {
       method: "GET",
       url: "/hello"
