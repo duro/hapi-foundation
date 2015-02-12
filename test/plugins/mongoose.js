@@ -20,11 +20,10 @@ lab.experiment("Mongoose Plugin", function() {
 
   });
 
-  lab.test("models loaded", function(done) {
-
-    expect(server.plugins.mongoose.modelsLoaded()).to.be.true();
+  lab.after(function(done) {
+    server.plugins.mongoose.drop();
+    server.plugins.mongoose.disconnect();
     done();
-
   });
 
 });

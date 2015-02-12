@@ -29,4 +29,10 @@ lab.experiment("Hello", function() {
     });
   });
 
+  lab.after(function(done) {
+    server.plugins.mongoose.drop();
+    server.plugins.mongoose.disconnect();
+    done();
+  });
+
 });
