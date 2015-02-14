@@ -67,13 +67,14 @@ lab.experiment("User", function() {
 
   lab.experiment('update', function() {
 
-    lab.test('should be able to update first and last name', function(done) {
+    lab.test('should be able to update', function(done) {
       var options = {
         method: "PUT",
         url: "/user/" + existingUser._id,
         payload: {
           firstName: "Your",
-          lastName: "Mom"
+          lastName: "Mom",
+          email: "newemail@email.com"
         }
       }
 
@@ -81,8 +82,9 @@ lab.experiment("User", function() {
         var payload = JSON.parse(response.payload);
 
         expect(response.statusCode).to.equal(200);
-        expect(payload.firstName).to.equal("Your");
-        expect(payload.lastName).to.exist("Mom");
+        expect(payload.firstName).to.equal(options.payload.firstName);
+        expect(payload.lastName).to.equal(options.payload.lastName);
+        expect(payload.email).to.equal(options.payload.email);
         expect(payload.password).to.not.exist();
 
         done();
