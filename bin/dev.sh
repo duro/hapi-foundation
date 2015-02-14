@@ -13,7 +13,11 @@ cp -a /tmp/app/node_modules $PROJECT_ROOT
 if [ "$DEBUGGER" = true ]; then
   # start app (with debugging)
   echo "Starting app with debugging"
-  nodemon -V --web-host 0.0.0.0 --exec node-debug index.js
+  if [ "$DEBUG_BRK" = false ]; then
+    nodemon -V --web-host 0.0.0.0 --debug-brk false --exec node-debug index.js
+  else
+    nodemon -V --web-host 0.0.0.0 --exec node-debug index.js
+  fi
 else
   # start app (no debugging)
   echo "Starting app"
