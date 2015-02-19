@@ -30,6 +30,7 @@ exports.register = function(server, options, next) {
       tags: ['api', 'user'],
       description: 'Update a user',
       notes: 'Receives an updated User object',
+      auth: 'token',
       validate: {
         params: {
           id: Joi.objectId()

@@ -22,5 +22,4 @@ module.exports = function(request, reply) {
       reply(err);
     });
 
-  // reply(200);
 }

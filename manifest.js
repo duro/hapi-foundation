@@ -33,8 +33,8 @@ var manifest = {
     },
     'hapi-auth-bearer-token': {},
     './server/api/hello': {},
-    './server/api/user': {},
-    './server/api/auth': {}
+    './server/api/auth': {},
+    './server/api/user': {}
   }
 };
 

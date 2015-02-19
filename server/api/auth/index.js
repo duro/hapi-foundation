@@ -6,7 +6,7 @@ exports.register = function(server, options, next) {
     allowQueryToken: true,              // optional, true by default
     allowMultipleHeaders: false,        // optional, false by default
     accessTokenName: 'access_token',    // optional, 'access_token' by default
-    validateFunc: require('./strategies/token')(server)
+    validateFunc: require('./strategies/token')
   });
 
   server.route({
