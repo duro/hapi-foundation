@@ -6,8 +6,6 @@ module.exports = function( token, callback ) {
   // decode token to get userId from payload
   var userId = null;
 
-  console.log('Validating');
-
   try {
     var payload = jwt.decode(token, AppConfig.get('/security/jwtSecret'));
     userId = payload.userId;

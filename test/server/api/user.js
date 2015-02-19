@@ -110,11 +110,11 @@ lab.experiment("User", function() {
             method: "PUT",
             url: "/user/" + payload.id,
             headers: {
-              access_token: payload.token
+              Authorization: 'Bearer ' + payload.token
             },
             payload: {
-              firstName: "Your",
-              lastName: "Mom",
+              firstName: "Love",
+              lastName: "Lamp",
               email: "newemail@email.com"
             }
           }
@@ -122,12 +122,10 @@ lab.experiment("User", function() {
           server.inject(updateReq, function(response) {
             var payload = JSON.parse(response.payload);
 
-            // console.log(response);
-
             expect(response.statusCode).to.equal(200);
-            expect(payload.firstName).to.equal(options.payload.firstName);
-            expect(payload.lastName).to.equal(options.payload.lastName);
-            expect(payload.email).to.equal(options.payload.email);
+            expect(payload.firstName).to.equal(updateReq.payload.firstName);
+            expect(payload.lastName).to.equal(updateReq.payload.lastName);
+            expect(payload.email).to.equal(updateReq.payload.email);
             expect(payload.password).to.not.exist();
 
             next(null);
@@ -160,6 +158,7 @@ lab.experiment("User", function() {
     lab.test('should fail if user tries to change email to one that is used by another user', function(done) {
 
       async.waterfall([
+        // Create new user
         function(next) {
           var createUser = {
             method: "POST",
@@ -176,18 +175,44 @@ lab.experiment("User", function() {
 
             expect(response.statusCode).to.equal(200);
             expect(payload.password).to.not.exist();
-            expect(payload.firstName).to.exist();
-            expect(payload.lastName).to.exist();
-            expect(payload.email).to.exist();
+            expect(payload.firstName).to.be.string();
+            expect(payload.lastName).to.string();
+            expect(payload.email).to.string();
 
             next(null, payload);
 
           });
         },
+        // Login user
         function(createdUser, next) {
+          var loginReq = {
+            method: "POST",
+            url: "/login",
+            payload: {
+              email: createdUser.email,
+              password: "hamsandwitch"
+            }
+          }
+
+          server.inject(loginReq, function(response) {
+            var payload = JSON.parse(response.payload);
+
+            expect(response.statusCode).to.equal(200);
+            expect(payload.token).to.be.string();
+
+            loggedInUser = payload;
+
+            next(null, payload);
+          })
+        },
+        // Update user
+        function(loggedInUser, next) {
           var updateUser = {
             method: "PUT",
-            url: "/user/" + createdUser.id,
+            url: "/user/" + loggedInUser.id,
+            headers: {
+              Authorization: 'Bearer ' + loggedInUser.token
+            },
             payload: {
               email: "newemail@email.com",
             }
@@ -195,7 +220,7 @@ lab.experiment("User", function() {
           server.inject(updateUser, function(response) {
             var payload = JSON.parse(response.payload);
 
-            expect(payload.errors.email).to.exist();
+            expect(payload.errors.email).to.be.object();
             expect(payload.errors.email.message)
               .to.include("in use by another User");
 
