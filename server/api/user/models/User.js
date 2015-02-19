@@ -2,6 +2,8 @@
 var mongoose  = require('mongoose')
   , Schema    = mongoose.Schema
   , bcrypt    = require('bcrypt')
+  , jwt       = require('jwt-simple')
+  , AppConfig = require('../../../../config')
   , User;
 
 // Constants
@@ -100,6 +102,53 @@ function checkForDuplicate(value, respond) {
     // If count is not 0, we have a problem
     respond((count === 0));
   });
+}
+
+/////////////////////////
+// Instance Methods
+/////
+
+/*
+method to verify password
+ */
+schema.methods.comparePassword = function(candidatePassword, cb) {
+  var user = this;
+
+  bcrypt.compare(candidatePassword, this.password || '', function(err, isMatch) {
+      if (err) return cb(err);
+      if (isMatch) {
+        cb(null, { match: true, temporary: false });
+      } else {
+        // check agains temporary password
+        try {
+          var payload = jwt.decode(user.temporaryPassword, settings('security').jwtSecret);
+        } catch (err) {
+          return cb(null, { match: false });
+        }
+        if (payload.createdAt + 86400000 < Date.now()) {
+          cb(null, { match: false })
+        } else {
+          bcrypt.compare(candidatePassword, payload.password, function(err, isMatch) {
+            if (err) return cb(err);
+            if (isMatch) {
+              cb(null, { match: true, temporary: true });
+            } else {
+              cb(null, { match: false });
+            }
+          });
+        }
+      }
+  });
+};
+
+/*
+custom instance method to generate token using
+jwt-simple nodejs module (https://github.com/hokaccha/node-jwt-simple)
+ */
+schema.methods.generateToken = function() {
+  var payload = { userId: this.id };
+  var token = jwt.encode(payload, AppConfig.get('/security/jwtSecret'));
+  return token;
 }
 
 module.exports = User = mongoose.model('User', schema, 'User');

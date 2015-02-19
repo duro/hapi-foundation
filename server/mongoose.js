@@ -1,4 +1,5 @@
 var Promise   = require('bluebird')
+  , AppConfig = require('../config')
   , mongoose  = require('mongoose')
   , mongoUri  = require('mongodb-uri')
   , Hoek      = require('hoek')
@@ -7,14 +8,7 @@ var Promise   = require('bluebird')
 
 Promise.promisifyAll(mongoose);
 
-module.exports = function(server) {
-  return {
-    options: server.settings.app.database.mongodb,
-    register: mongoDBConnector
-  }
-}
-
-var mongoDBConnector = function mongoDBConnector(server, options, next) {
+exports.register = function (server, options, next) {
 
   var uri, defaults;
 
@@ -23,22 +17,25 @@ var mongoDBConnector = function mongoDBConnector(server, options, next) {
     database: null
   }
 
-  if (options == null) options = {};
-
   options = Hoek.applyToDefaults(defaults, options);
 
-  Hoek.assert(
-    options.hosts && _.isArray(options.hosts),
-    'You must supply a hosts array for your mongo connection'
-  );
+  try {
+    Hoek.assert(
+      options.hosts && _.isArray(options.hosts),
+      'You must supply a hosts array for your mongo connection'
+    );
 
-  Hoek.assert(
-    options.hosts.length > 0 && options.hosts[0].host && options.hosts[0].port,
-    'Your hosts array must contain at least one host object. ' +
-    'Example: {host: "127.0.0.1", port: 27017}'
-  );
+    Hoek.assert(
+      options.hosts.length > 0 && options.hosts[0].host && options.hosts[0].port,
+      'Your hosts array must contain at least one host object. ' +
+      'Example: {host: "127.0.0.1", port: 27017}'
+    );
 
-  Hoek.assert(options.database, 'You must supply a database for your mongo connection');
+    Hoek.assert(options.database, 'You must supply a database for your mongo connection');
+  }
+  catch(err) {
+    return next(err);
+  }
 
   server.expose('mongoose', mongoose);
   server.expose('connect', startDb);
@@ -81,7 +78,6 @@ var mongoDBConnector = function mongoDBConnector(server, options, next) {
   startDb(next);
 }
 
-mongoDBConnector.attributes = {
-  name: 'mongoose',
-  version: '1.0.0'
+exports.register.attributes = {
+  name: 'mongoose'
 }

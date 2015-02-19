@@ -1,14 +1,13 @@
-var Hapi    = require('hapi')
-  , env     = process.env.NODE_ENV || 'dev'
-  , config  = require('../../lib/config/' + env)
+var Hapi      = require('hapi')
+  , AppConfig = require('../../config')
 
 module.exports = function() {
 
-  var server = new Hapi.Server({ app: config });
+  var server = new Hapi.Server();
 
   server.connection({
-      host: server.settings.app.server.host,
-      port: server.settings.app.server.port
+      host: AppConfig.get('/server/host'),
+      port: AppConfig.get('/server/port')
   });
 
   return server;

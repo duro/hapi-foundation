@@ -1,13 +1,21 @@
 var Lab         = require("lab")
-  , Code        = require('code') // Assertion library
-  , lab         = exports.lab = Lab.script()
-  , MockServer  = require('../mocks/server')
-  , expect      = Code.expect;
+  , Code        = require('code')
+  , Composer    = require('../../../index')
+  , UserPlugin  = require('../../../server/api/user')
+  , AppConfig   = require('../../../config')
+  , expect      = Code.expect
+  , lab         = exports.lab = Lab.script();
+
+var MongoosePlugin = {
+  options: AppConfig.get('/database/mongodb'),
+  register: require('../../../server/mongoose')
+};
 
 lab.experiment("User", function() {
 
-  var server = new MockServer()
-    , newUser = {
+  var server;
+
+  var newUser = {
         firstName: 'Adam',
         lastName: 'Test',
         email: 'adam@duromedia.com',
@@ -16,8 +24,10 @@ lab.experiment("User", function() {
     , existingUser;
 
   lab.before(function(done) {
-    var deps = require('../../lib/plugins')(server);
-    server.register(deps, done);
+    Composer(function(err, composedServer) {
+      server = composedServer;
+      done(err);
+    })
   });
 
   lab.experiment('create', function() {
@@ -116,5 +126,6 @@ lab.experiment("User", function() {
     server.plugins.mongoose.disconnect();
     done();
   });
+
 
 });

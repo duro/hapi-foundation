@@ -2,7 +2,7 @@ var Joi = require('joi');
 
 Joi.objectId = require('joi-objectid');
 
-var UserController = function(server, options, next) {
+exports.register = function(server, options, next) {
 
   server.route({
     method: 'POST',
@@ -48,13 +48,13 @@ var UserController = function(server, options, next) {
   next();
 }
 
-UserController.attributes = {
-  name: 'user',
+exports.register.attributes = {
+  name: 'vt-api-user',
   version: '1.0.0'
 }
 
-module.exports = function(server) {
-  return {
-    register: UserController
-  }
-}
+// module.exports = function(server) {
+//   return {
+//     register: UserController
+//   }
+// }

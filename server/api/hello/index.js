@@ -1,5 +1,5 @@
 
-module.exports.register = function(server, options, next) {
+exports.register = function(server, options, next) {
 
   // Add the route
   server.route({
@@ -14,7 +14,7 @@ module.exports.register = function(server, options, next) {
 
 }
 
-module.exports.register.attributes = {
-  name: 'hello',
+exports.register.attributes = {
+  name: 'vt-api-hello',
   version: '1.0.0'
 }
