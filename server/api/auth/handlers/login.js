@@ -3,16 +3,23 @@ var User  = require('../../user/models/User')
   , Boom  = require('boom');
 
 module.exports = function(request, reply) {
-  var payload = request.payload;
+  var payload = request.payload
+    , user;
 
   User.findOneAsync({email: payload.email})
-    .then(function(user) {
-      if (!user) {
-        return reply(Boom.unauthorized('no user with provided email found'));
-      }
-      var token = user.generateToken();
-      return reply(_.extend(user.toJSON(), {token: token}));
+    .then(function(foundUser) {
+      if (!foundUser) throw Boom.unauthorized('no user with provided email found');
+      user = foundUser;
+      return user.comparePassword(payload.password);
     })
-    .catch(reply);
+    .then(function(compareResult) {
+      if (compareResult.match) {
+        var token = user.generateToken();
+        return _.extend(user.toJSON(), { token: token })
+      } else {
+        throw Boom.unauthorized('password did not match');
+      }
+    })
+    .nodeify(reply);
 
 }

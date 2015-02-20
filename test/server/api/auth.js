@@ -99,6 +99,25 @@ lab.experiment("Auth", function() {
     })
   });
 
+  lab.test('should fail if wrong password used', function(done) {
+    var request = {
+      method: "POST",
+      url: "/login",
+      payload: {
+        email: user.email,
+        password: "doesntmatter"
+      }
+    }
+
+    server.inject(request, function(response) {
+      var payload = JSON.parse(response.payload);
+
+      expect(response.statusCode).to.equal(401);
+
+      done();
+    })
+  });
+
   lab.after(function(done) {
     server.plugins.mongoose.drop();
     server.plugins.mongoose.disconnect();

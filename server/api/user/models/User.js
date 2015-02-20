@@ -1,6 +1,7 @@
 // Deopendencies
 var mongoose  = require('mongoose')
   , Schema    = mongoose.Schema
+  , Promise   = require('bluebird')
   , bcrypt    = require('bcrypt')
   , jwt       = require('jwt-simple')
   , AppConfig = require('../../../../config')
@@ -8,6 +9,9 @@ var mongoose  = require('mongoose')
 
 // Constants
 var SALT_WORK_FACTOR = 10;
+
+// Promisify our bcrypt module
+Promise.promisifyAll(bcrypt);
 
 //////////////////////
 // Field Schema
@@ -111,34 +115,22 @@ function checkForDuplicate(value, respond) {
 /*
 method to verify password
  */
-schema.methods.comparePassword = function(candidatePassword, cb) {
+schema.methods.comparePassword = function(candidatePassword) {
   var user = this;
 
-  bcrypt.compare(candidatePassword, this.password || '', function(err, isMatch) {
-      if (err) return cb(err);
-      if (isMatch) {
-        cb(null, { match: true, temporary: false });
-      } else {
-        // check agains temporary password
-        try {
-          var payload = jwt.decode(user.temporaryPassword, settings('security').jwtSecret);
-        } catch (err) {
-          return cb(null, { match: false });
-        }
-        if (payload.createdAt + 86400000 < Date.now()) {
-          cb(null, { match: false })
-        } else {
-          bcrypt.compare(candidatePassword, payload.password, function(err, isMatch) {
-            if (err) return cb(err);
-            if (isMatch) {
-              cb(null, { match: true, temporary: true });
-            } else {
-              cb(null, { match: false });
-            }
-          });
-        }
-      }
-  });
+  return bcrypt.compareAsync(candidatePassword, this.password || '')
+    .then(function(isMatch) {
+      return { match: isMatch }
+    });
+
+  // bcrypt.compare(candidatePassword, this.password || '', function(err, isMatch) {
+  //     if (err) return cb(err);
+  //     if (isMatch) {
+  //       cb(null, { match: true});
+  //     } else {
+  //       cb()
+  //     }
+  // });
 };
 
 /*
