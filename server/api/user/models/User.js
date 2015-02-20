@@ -122,15 +122,6 @@ schema.methods.comparePassword = function(candidatePassword) {
     .then(function(isMatch) {
       return { match: isMatch }
     });
-
-  // bcrypt.compare(candidatePassword, this.password || '', function(err, isMatch) {
-  //     if (err) return cb(err);
-  //     if (isMatch) {
-  //       cb(null, { match: true});
-  //     } else {
-  //       cb()
-  //     }
-  // });
 };
 
 /*
