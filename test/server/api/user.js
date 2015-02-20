@@ -108,7 +108,7 @@ lab.experiment("User", function() {
         function(payload, next) {
           var updateReq = {
             method: "PUT",
-            url: "/user/" + payload.id,
+            url: "/user",
             headers: {
               Authorization: 'Bearer ' + payload.token
             },
@@ -134,23 +134,6 @@ lab.experiment("User", function() {
         }
       ], function(err, result) {
         done(err);
-      });
-
-    });
-
-    lab.test('should fail if no {id} provided', function(done) {
-      var options = {
-        method: "PUT",
-        url: "/user/",
-        payload: {
-          firstName: "Your",
-          lastName: "Mom"
-        }
-      }
-
-      server.inject(options, function(response) {
-        expect(response.statusCode).to.equal(404);
-        done();
       });
 
     });
@@ -209,7 +192,7 @@ lab.experiment("User", function() {
         function(loggedInUser, next) {
           var updateUser = {
             method: "PUT",
-            url: "/user/" + loggedInUser.id,
+            url: "/user",
             headers: {
               Authorization: 'Bearer ' + loggedInUser.token
             },

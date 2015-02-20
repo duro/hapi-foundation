@@ -25,7 +25,7 @@ exports.register = function(server, options, next) {
 
   server.route({
     method: 'PUT',
-    path: '/user/{id}',
+    path: '/user',
     config: {
       tags: ['api', 'user'],
       description: 'Update a user',
