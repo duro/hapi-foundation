@@ -29,7 +29,7 @@ exports.register = function(server, options, next) {
     config: {
       tags: ['api', 'user'],
       description: 'Update a user',
-      notes: 'Receives an updated User object',
+      notes: 'Receives an updated User object, returns the modified user',
       auth: 'token',
       validate: {
         params: {

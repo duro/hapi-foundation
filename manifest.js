@@ -28,8 +28,19 @@ var manifest = {
     },
     './server/mongoose': AppConfig.get('/database/mongodb'),
     'hapi-swagger': {
+      info: {
+        title: AppConfig.get('/api/title'),
+        description: AppConfig.get('/api/description')
+      },
       basePath: AppConfig.get('/api/basepath'),
-      apiVersion: AppConfig.get('/pkg/version')
+      apiVersion: AppConfig.get('/pkg/version'),
+      authorizations: {
+        Bearer: {
+          type: 'apiKey',
+          passAs: 'header',
+          keyname: 'Authorization'
+        }
+      }
     },
     'hapi-auth-bearer-token': {},
     './server/api/hello': {},

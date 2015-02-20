@@ -16,7 +16,9 @@ var config = {
   },
 
   api: {
-    basepath: 'http://docker.local:8000'
+    basepath: 'http://docker.local:8000',
+    title: 'VT-API',
+    description: 'The official API for the VT platform.'
   },
 
   security: {
