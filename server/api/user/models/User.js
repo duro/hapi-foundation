@@ -74,20 +74,17 @@ schema.pre('save', function(next) {
   if (!user.isModified('password')) return next();
 
   // generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if (err) return next(err);
-
-      // hash the password using our new salt
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) return next(err);
-
-          // reset the temporary password and
-          // override the cleartext password with the hashed one
-          user.temporaryPassword = "";
-          user.password = hash;
-          next();
-        });
-    });
+  bcrypt.genSaltAsync(SALT_WORK_FACTOR)
+    .then(function(salt) {
+      return bcrypt.hashAsync(user.password, salt)
+    })
+    .then(function(hash) {
+      // reset the temporary password and
+      // override the cleartext password with the hashed one
+      user.temporaryPassword = "";
+      user.password = hash;
+    })
+    .nodeify(next);
 });
 
 ////////////////////
