@@ -37,6 +37,7 @@
     "joi-objectid": "^1.1.0",
     "jwt-simple": "^0.2.0",
     "lodash": "^3.0.0",
+    "moment": "^2.9.0",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^3.8.22",
     "mongoose-mass-assign": "^0.4.0"
