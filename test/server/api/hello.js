@@ -1,7 +1,6 @@
 var Lab         = require("lab")
   , Code        = require('code')
   , Composer    = require('../../../index')
-  , HelloPlugin = require('../../../server/api/hello')
   , expect      = Code.expect
   , lab         = exports.lab = Lab.script();
 

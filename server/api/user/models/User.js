@@ -1,4 +1,4 @@
-// Deopendencies
+// Dependencies
 var mongoose  = require('mongoose')
   , Schema    = mongoose.Schema
   , Promise   = require('bluebird')
@@ -29,7 +29,7 @@ var schema = new Schema({
                 required: true,
                 index: {unique: true}
               },
-  password  : {type: String},
+  password  : String,
   temporaryPassword : {type: String}
 });
 
