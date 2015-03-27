@@ -22,7 +22,6 @@ lab.experiment("Hello", function() {
     };
 
     server.inject(options, function(response) {
-      var result = response.result;
 
       expect(response.statusCode).to.equal(200);
       expect(response.result).to.include('hello world');

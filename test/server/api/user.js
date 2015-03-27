@@ -1,16 +1,9 @@
 var Lab         = require("lab")
   , Code        = require('code')
   , Composer    = require('../../../index')
-  , UserPlugin  = require('../../../server/api/user')
-  , AppConfig   = require('../../../config')
   , expect      = Code.expect
   , async       = require('async')
   , lab         = exports.lab = Lab.script();
-
-var MongoosePlugin = {
-  options: AppConfig.get('/database/mongodb'),
-  register: require('../../../server/mongoose')
-};
 
 lab.experiment("User", function() {
 
@@ -132,7 +125,7 @@ lab.experiment("User", function() {
           });
 
         }
-      ], function(err, result) {
+      ], function(err) {
         done(err);
       });
 
@@ -211,7 +204,7 @@ lab.experiment("User", function() {
 
           });
         }
-      ], function(err, results) {
+      ], function(err) {
         done(err);
       });
 

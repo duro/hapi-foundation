@@ -2,6 +2,8 @@ var async = require('async');
 
 module.exports = function(server, cb) {
 
+  var user;
+
   async.waterfall([
     // Create User
     function(next) {
@@ -32,7 +34,6 @@ module.exports = function(server, cb) {
       }
       server.inject(loginReq, function(response) {
         var payload = JSON.parse(response.payload);
-        token = payload.token;
         next(null, payload);
       });
     }

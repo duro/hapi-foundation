@@ -1,6 +1,6 @@
 var Lab       = require('lab')
   , Code      = require('code')
-  , Composer = require('../index')
+  , Composer  = require('../index')
   , expect    = Code.expect
   , lab       = exports.lab = Lab.script();
 
@@ -11,7 +11,7 @@ lab.experiment('App', function () {
 
         Composer(function (err, composedServer) {
 
-            Code.expect(composedServer).to.be.an.object();
+            expect(composedServer).to.be.an.object();
 
             done(err);
         });

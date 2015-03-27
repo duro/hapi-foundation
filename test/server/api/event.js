@@ -79,7 +79,6 @@ lab.experiment("Event", function() {
           };
 
           server.inject(eventReq, function(response) {
-            var payload = JSON.parse(response.payload);
 
             expect(response.statusCode).to.equal(400);
 
@@ -101,7 +100,6 @@ lab.experiment("Event", function() {
           };
 
           server.inject(eventReq, function(response) {
-            var payload = JSON.parse(response.payload);
 
             expect(response.statusCode).to.equal(400);
 

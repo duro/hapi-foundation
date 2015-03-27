@@ -1,17 +1,10 @@
 var Lab         = require("lab")
   , Code        = require('code')
   , Composer    = require('../../../index')
-  , UserPlugin  = require('../../../server/api/user')
-  , AuthPlugin  = require('../../../server/api/auth')
   , AppConfig   = require('../../../config')
   , jwt         = require('jwt-simple')
   , expect      = Code.expect
   , lab         = exports.lab = Lab.script();
-
-var MongoosePlugin = {
-  options: AppConfig.get('/database/mongodb'),
-  register: require('../../../server/mongoose')
-};
 
 var user = {
   firstName: 'Tester',
@@ -91,7 +84,6 @@ lab.experiment("Auth", function() {
     }
 
     server.inject(request, function(response) {
-      var payload = JSON.parse(response.payload);
 
       expect(response.statusCode).to.equal(401);
 
@@ -110,7 +102,6 @@ lab.experiment("Auth", function() {
     }
 
     server.inject(request, function(response) {
-      var payload = JSON.parse(response.payload);
 
       expect(response.statusCode).to.equal(401);
 
