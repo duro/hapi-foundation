@@ -1,4 +1,4 @@
-FROM node:0.10.36
+FROM node:0.12.0
 
 ## set some ENV vars
 ENV HOME /root
@@ -43,4 +43,4 @@ RUN cp -a /tmp/app/node_modules $PROJECT_ROOT
 ## expose app port
 EXPOSE 8000
 
-CMD ["node", "index.js"]
+CMD ["bin/start.sh"]

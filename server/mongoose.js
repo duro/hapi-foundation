@@ -1,9 +1,7 @@
 var Promise   = require('bluebird')
-  , AppConfig = require('../config')
   , mongoose  = require('mongoose')
   , mongoUri  = require('mongodb-uri')
   , Hoek      = require('hoek')
-  , glob      = require('glob')
   , _         = require('lodash');
 
 Promise.promisifyAll(mongoose);

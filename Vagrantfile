@@ -1,4 +1,6 @@
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+ENV["DOCKER_HOST_VAGRANT_FILE"] ||= "./docker/Dockerhost"
+ENV["DOCKER_HOST_VAGRANT_NAME"] ||= "zg-site-docker-host"
 
 # BUILD ALL WITH: vagrant up --no-parallel
 
@@ -7,8 +9,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "mongodb" do |v|
 
     v.vm.provider "docker" do |d|
-      d.vagrant_machine = "zg-docker-host"
-      d.vagrant_vagrantfile = "#{ENV['HOME']}/Workspace/docker/vagrant/Vagrantfile"
+      d.vagrant_machine = ENV["DOCKER_HOST_VAGRANT_NAME"]
+      d.vagrant_vagrantfile = ENV["DOCKER_HOST_VAGRANT_FILE"]
       d.image = "mongo:2.6.7"
       d.name = "vt_mongodb"
       d.remains_running = true
@@ -21,15 +23,13 @@ Vagrant.configure("2") do |config|
       rsync__exclude: get_ignored_files()
 
     v.vm.provider "docker" do |d|
-      d.vagrant_machine = "zg-docker-host"
-      d.vagrant_vagrantfile = "#{ENV['HOME']}/Workspace/docker/vagrant/Vagrantfile"
+      d.vagrant_machine = ENV["DOCKER_HOST_VAGRANT_NAME"]
+      d.vagrant_vagrantfile = ENV["DOCKER_HOST_VAGRANT_FILE"]
       d.build_dir = "."
       d.build_args = ['--tag="vtapp/api"']
-      d.env = { :NODE_ENV => 'dev' }
       d.remains_running = true
       d.ports = ["8000:8000", "8080:8080", "5858:5858"]
       d.link("vt_mongodb:mongodb")
-      d.cmd = ["./bin/dev.sh"]
     end
   end
 

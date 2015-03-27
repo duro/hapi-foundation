@@ -1,5 +1,5 @@
 // timestamp.js
-exports = module.exports = function timestampPlugin (schema, options) {
+exports = module.exports = function timestampPlugin (schema) {
   schema.add({ created: {type: Date, required: true} });
 
   schema.add({ modified: {type: Date, required: true} });

@@ -1,8 +1,6 @@
 // Dependencies
 var mongoose  = require('mongoose')
   , Schema    = mongoose.Schema
-  , Promise   = require('bluebird')
-  , AppConfig = require('../../../../config')
   , Event;
 
 //////////////////////

@@ -1,0 +1,7 @@
+{
+  "laxcomma": true,
+  "asi": true,
+  "undef": true,
+  "unused": true,
+  "node": true
+}

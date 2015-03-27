@@ -113,8 +113,6 @@ function checkForDuplicate(value, respond) {
 method to verify password
  */
 schema.methods.comparePassword = function(candidatePassword) {
-  var user = this;
-
   return bcrypt.compareAsync(candidatePassword, this.password || '')
     .then(function(isMatch) {
       return { match: isMatch }
